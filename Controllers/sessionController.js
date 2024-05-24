@@ -77,6 +77,9 @@ export const getAllRequests = async (req, res) => {
 
     try {
         const requests = await Session.find({ teachers: teacherId });
+        const student = await User.findById(requests.student);
+        requests.students.name = student.name;
+        console.log(requests)
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: 'Something went wrong', error });
